@@ -42,16 +42,14 @@ NODE constructST(long l, long r, long idx) {
 
 //										Query
 NODE rangeMsa(long l, long r, long idx, long a, long b) {
-	if (l == a && r == b) {
-		return segtree[idx];	
-	}	
+	if (l == x && r == y) return segtree[idx];	
 	
 	long mid = (l+r)/2;
-	if (b <= mid) {		//go to left sub tree
+	if (y <= mid) {		//go to left sub tree
 		return rangeMsa(l, mid, ((idx<<1) + 1), a, b);
 	}
 	
-	if (a > mid) {		//go to right sub tree
+	if (x > mid) {		//go to right sub tree
 		return rangeMsa(mid+1, r, ((idx<<1) + 2), a, b);
 	}		
 	
