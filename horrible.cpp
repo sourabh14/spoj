@@ -7,10 +7,9 @@
 using namespace std;
 
 int t, choice;
-long segtree[TREESIZE], lazy[TREESIZE];
-long n, c, k;
-long st, nd;				//for range sum and range update query
-long indx, dif;			
+long long segtree[TREESIZE], lazy[TREESIZE], dif;
+long n, c, i;
+long st, nd;				//for range sum and range update query		
 	
 
 
@@ -55,8 +54,7 @@ void update_rsq(long l, long r, long idx) {
 	if (l>nd || r<st) return; 						//fully outside
 	
 	if (l >= st && r <= nd)  {						//fully inside
-		segtree[idx] += (r-l+1)*dif;						
-		
+		segtree[idx] += (r-l+1)*dif;
 		if (l != r) {								//not a leaf node
 			lazy[(idx<<1) + 1] += dif;				//mark its children as lazy
 			lazy[(idx<<1) + 2] += dif;
@@ -68,7 +66,7 @@ void update_rsq(long l, long r, long idx) {
 	update_rsq(l, mid, ((idx<<1) + 1));
 	update_rsq((mid + 1), r, ((idx<<1) + 2));
 	
-	segtree[idx] = segtree[(idx<<1) + 1] + segtree[(idx<<1) + 2];		
+	segtree[idx] = segtree[(idx<<1) + 1] + segtree[(idx<<1) + 2];	
 }				
 	
 	
@@ -81,7 +79,7 @@ int main() {
 		while (c--) { 
 			scanf("%d",&choice);
 			if (choice == 0) {			//range update query
-				scanf("%ld %ld %ld",&st, &nd, &dif);
+				scanf("%ld %ld %lld",&st, &nd, &dif);
 				st--; nd--;
 				update_rsq(0,n-1,0);	
 			}
@@ -89,7 +87,7 @@ int main() {
 				scanf("%ld %ld",&st, &nd);
 				st--; nd--;
 				printf("%lld\n",rangeSum(0,n-1,0));
-			}		
+			}	
 		}
 	}
 	return 0;		
