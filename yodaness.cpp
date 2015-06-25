@@ -1,12 +1,17 @@
-//Inversion count - modified merge sort
+//inversion count 
 #include <cstdio>
+#include <string>
+#include <map>
+using namespace std;
 
-long t, n, i, j, ind, arr[200005];
+int t, n, i, j, ind, arr[30004];
 long long ans;
+map<string, int> mp;
+char word[30];
 
-void merge(long l, long mid, long r) {
-	long n1 = mid-l+1, n2 = r-mid; 
-	long arr1[n1], arr2[n2];
+void merge(int l, int mid, int r) {
+	int n1 = mid-l+1, n2 = r-mid; 
+	int arr1[n1], arr2[n2];
 	
 	for (i=0; i<n1; i++) arr1[i] = arr[l+i];
 	for (i=0; i<n2; i++) arr2[i] = arr[mid+i+1];
@@ -33,9 +38,9 @@ void merge(long l, long mid, long r) {
 }					
 					
 
-void mergeSort(long l, long r) {
+void mergeSort(int l, int r) {
 	if (l<r) {	
-		long mid = (l+r)/2;
+		int mid = (l+r)/2;
 		mergeSort(l,mid);
 		mergeSort(mid+1,r);
 		merge(l,mid,r);
@@ -43,11 +48,19 @@ void mergeSort(long l, long r) {
 }		
 
 int main() {
-	scanf("%ld",&t);
+	scanf("%d",&t);
 	while (t--) {
 		ans = 0;
-		scanf("%ld",&n);
-		for (i=0; i<n; i++) scanf("%ld",&arr[i]);
+		mp.clear();
+		scanf("%d",&n);
+		for (i=0; i<n; i++) {
+			scanf("%s",word);
+			mp.insert(make_pair(word,i));
+		}	
+		for (i=0; i<n; i++) {
+			scanf("%s",word);
+			arr[i] = mp[word];
+		}	
 		mergeSort(0,n-1);
 		printf("%lld\n",ans);
 	}
